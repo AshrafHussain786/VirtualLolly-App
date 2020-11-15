@@ -2,38 +2,35 @@ const { ApolloServer, gql } = require('apollo-server-lambda')
 
 const typeDefs = gql`
   type Query {
-    hello: String
-    allAuthors: [Author!]
-    author(id: Int!): Author
-    authorByName(name: String!): Author
+    lolly: String!
   }
-  type Author {
-    id: ID!
-    name: String!
-    married: Boolean!
+  type Lolly {
+    recipientName: String!
+    senderName: String!
+    message: String!
+    topColor: String!
+    mediumColor: String!
+    bottomColor: String!
+    path: String!
+  }
+
+  type Mutation {
+    createLolly(recipientName: String!, message: String!,senderName: String!, topColor: String!,mediumColor: String!,bottomColor: String!): Lolly
   }
 `
 
-const authors = [
-  { id: 1, name: 'Terry Pratchett', married: false },
-  { id: 2, name: 'Stephen King', married: true },
-  { id: 3, name: 'JK Rowling', married: false },
-]
-
 const resolvers = {
   Query: {
-    hello: () => {
+    lolly: () => {
       return 'Hello, world!'
     },
-    allAuthors: () => {
-      return authors
-    },
-    author: () => {},
-    authorByName: (root, args) => {
-      console.log('hihhihi', args.name)
-      return authors.find((author) => author.name === args.name) || 'NOTFOUND'
-    },
   },
+  Mutation: {
+    createLolly: (_, args) => {
+      console.log(args)
+      return args;
+    }
+  }
 }
 
 const server = new ApolloServer({
