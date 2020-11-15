@@ -25,6 +25,7 @@ const createLollyMutation = gql`
     $topColor: String!
     $mediumColor: String!
     $bottomColor: String!
+    $path: String!
   ) {
     createLolly(
       recipientName: $recipientName
@@ -33,8 +34,9 @@ const createLollyMutation = gql`
       topColor: $topColor
       mediumColor: $mediumColor
       bottomColor: $bottomColor
+      path: $path
     ) {
-      message
+      
       path
     }
   }
@@ -67,6 +69,7 @@ const CreateLolly = () => {
 
   const onSubmit = async (values, actions) => {
     const slug = shortId.generate();
+    console.log("values", values)
     console.log(slug);
     const result = await createLolly({
       variables: {
@@ -76,9 +79,11 @@ const CreateLolly = () => {
         topColor: fillLollyTop,
         mediumColor: fillLollyMiddle,
         bottomColor: fillLollyBottom,
-        path: slug,
+        path: slug.toString(),
       },
     });
+
+    console.log(result)
 
     await actions.resetForm({
       values: {
@@ -87,7 +92,7 @@ const CreateLolly = () => {
         from: "",
       },
     });
-    await navigate(`/lolly/${result.data?.craeteLolly?.slug}`);
+    // await navigate(`/lolly/${result.data?.craeteLolly?.slug}`);
     // console.log(result);
   };
 
@@ -113,7 +118,8 @@ const CreateLolly = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-evenly",
+        width: "100%",
+        justifyContent: "space-around",
         alignItems: "center",
         height: "100vh"
       }}
@@ -131,42 +137,44 @@ const CreateLolly = () => {
           flexDirection: "column",
           justifyContent: "space-between",
           alignItems: "center",
+          height: "30vh"
         }}
       >
-        <div>
           <input
             type="color"
             value={fillLollyTop}
             onChange={(e) => setfillLollyTop(e.target.value)}
+            style={{color: {fillLollyBottom} , cursor: "pointer", width: "35px", height: "35px", borderRadius: "20%"}}
           />
-        </div>
-        <div>
+       
           <input
             type="color"
             value={fillLollyMiddle}
             onChange={(e) => setfillLollyMiddle(e.target.value)}
+            style={{color: {fillLollyBottom} , cursor: "pointer", width: "35px", height: "35px", borderRadius: "20%"}}
           />
-        </div>
-        <div>
+        
+        
           <input
             type="color"
             value={fillLollyBottom}
+            style={{color: {fillLollyBottom} , cursor: "pointer", width: "35px", height: "35px", borderRadius: "20%"}}
             onChange={(e) => setfillLollyBottom(e.target.value)}
           />
-        </div>
+        
       </div>
-      <div style={{
+      <div >
+        <Paper style={{
               width: "400px",
               margin: "0 auto",
               padding: "30px 0px ",
             }}>
-        <Paper>
         <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
               validationSchema={validationSchema}
             >
-              <Form>
+              <Form style={{padding: "14px"}}>
                 <Field
                   as={TextField}
                   id="To"
