@@ -11,13 +11,23 @@ import {navigate} from 'gatsby'
 import ErrorMsg from "../Utils/ErrorMsg";
 
 
-const GETDATA = gql`
-  {
-    lolly
-  }
-`;
 
-const createLollyMutation = gql`
+// export const GET_LOLLY_BY_SLUG = gql`
+//   query getLollyBySlug($path: String!) {
+//     getLollyBySlug(path: $path) {
+//       recipientName
+//       message
+//       senderName
+//       topColor
+//       mediumColor
+//       bottomColor
+//       path
+//     }
+//   }
+// `
+
+
+const CREATE_LOLLY_MUTATION = gql`
   mutation createLolly(
     $recipientName: String!
     $message: String!
@@ -27,18 +37,10 @@ const createLollyMutation = gql`
     $bottomColor: String!
     $path: String!
   ) {
-    createLolly(
-      recipientName: $recipientName
-      message: $message
-      senderName: $senderName
-      topColor: $topColor
-      mediumColor: $mediumColor
-      bottomColor: $bottomColor
-      path: $path
-    ) {
-      
-      path
-    }
+    createLolly(recipientName: $recipientName, message: $message, senderName: $senderName, topColor: $topColor, mediumColor: $mediumColor, bottomColor: $bottomColor, path: $path)
+     {
+      message
+      }
   }
 `;
 
@@ -64,46 +66,42 @@ const CreateLolly = () => {
   const [fillLollyMiddle, setfillLollyMiddle] = React.useState("#e95946");
   const [fillLollyBottom, setfillLollyBottom] = React.useState("#deaa43");
 
-  const [createLolly] = useMutation(createLollyMutation);
-  const { data, error, loading } = useQuery(GETDATA);
+  const [createLolly] = useMutation(CREATE_LOLLY_MUTATION);
+  // const { data, error, loading } = useQuery(GET_LOLLY_BY_SLUG);
 
-  const onSubmit = async (values, actions) => {
-    const slug = shortId.generate();
-    console.log("values", values)
-    console.log(slug);
-    const result = await createLolly({
-      variables: {
-        recipientName: values.to,
-        message: values.message,
-        senderName: values.from,
-        topColor: fillLollyTop,
-        mediumColor: fillLollyMiddle,
-        bottomColor: fillLollyBottom,
-        path: slug.toString(),
-      },
-    });
+ const onSubmit = async (values, actions) => {
+  const slug = shortId.generate();
+  const result = await createLolly({
+    variables: {
+      recipientName: values.to,
+      message: values.message,
+      senderName: values.from,
+      topColor: fillLollyTop,
+      mediumColor: fillLollyMiddle,
+      bottomColor: fillLollyBottom,
+      path: slug.toString(),
+    },
+  });
 
-    console.log(result)
+  await actions.resetForm({
+    values: {
+      to: "",
+      message: "",
+      from: "",
+    },
+  });
 
-    await actions.resetForm({
-      values: {
-        to: "",
-        message: "",
-        from: "",
-      },
-    });
-    // await navigate(`/lolly/${result.data?.craeteLolly?.slug}`);
-    // console.log(result);
-  };
+  await navigate(`/lolly/${slug}`);
+};
 
 
-  if (loading) {
-    return (
-      <div style= {{display: "flex", justifyContent: "center", textAlign: "center", height: "100vh"}}>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+//   if (loading) {
+//     return (
+//       <div style= {{display: "flex", justifyContent: "center", textAlign: "center", height: "100vh"}}>
+//         <h1>Loading...</h1>
+//       </div>
+//     );
+//   }
 
 //   if (error) {
 //     return (
@@ -113,8 +111,10 @@ const CreateLolly = () => {
 //     );
 //   }
 
+// console.log(data)
+
   return (
-      
+    
     <div
       style={{
         display: "flex",

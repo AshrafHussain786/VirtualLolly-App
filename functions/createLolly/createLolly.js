@@ -1,13 +1,13 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
-faunadb = require("faunadb"),
-axios = require("axios")
+(faunadb = require("faunadb")), (axios = require("axios"));
 q = faunadb.query;
 
-// AllLollies: [Lolly!]
 const typeDefs = gql`
-  type Query: {
+  type Query {
+    getAllLollies: [Lolly]!
     getLollyBySlug(path: String!): Lolly
   }
+
   type Lolly {
     recipientName: String!
     senderName: String!
@@ -27,75 +27,58 @@ const typeDefs = gql`
       mediumColor: String!
       bottomColor: String!
       path: String!
-    ): Lolly!
+    ): Lolly
   }
 `;
 
 const Client = new faunadb.Client({
-  secret:"fnAD6uH78FACAXQt4Xqf5rXsT4plCVUYGul68PEm",
+  secret: "fnAD6uH78FACAXQt4Xqf5rXsT4plCVUYGul68PEm",
 });
 
-
 const resolvers = {
-   Query: {
+  Query: {
+    getAllLollies: async () => {
+      var result = await Client.query(
+        q.Map(
+          q.Paginate(q.Match(q.Index("AllLollies"))),
+          q.Lambda((x) => q.Get(x))
+        )
+      );
+      let x = [];
+      result.data.map((curr) => {
+        x.push(curr.data);
+      });
 
-  //   AllLollies: async () => {
-  //     console.log("hitt")
-  //     try {
-        
-  //       const result = await Client.query(
-  //         q.Map(
-  //           q.Paginate(q.Match(q.Index("Lolly"))),
-  //           q.Lambda((lolly) => {
-  //             console.log(lolly)
-  //             q.Get(lolly)})
-  //         )
-  //       );
+      return x;
+    },
 
-  //       return result.data.map((lolly) => {
-  //         return {
-  //           recipientName: lolly.data.recipientName,
-  //           message: lolly.data.message,
-  //           senderName: lolly.data.senderName,
-  //           topColor: lolly.data.topColor,
-  //           mediumColor: lolly.data.mediumColor,
-  //           bottomColor: lolly.data.bottomColor,
-  //           path: lolly.data.path,
-  //         };
-  //       });
-  //     } catch (error) {
-  //       return error.toString();
-  //     }},
-    
+
     getLollyBySlug: async (_, { path }) => {
+      console.log(path);
       try {
         const result = await Client.query(
           q.Get(q.Match(q.Index("Lolly"), path))
         );
+
+        console.log(result)
         return result.data;
       } catch (error) {
         return error.toString();
       }
     },
   },
-  
-  
-  Mutation: {
-    createLolly: async(_, args) => {
-      console.log(args)
-      try {
-    
 
+  Mutation: {
+    createLolly: async (_, args) => {
+      try {
         const result = await Client.query(
           q.Create(q.Collection("Lolly"), {
             data: args,
           })
         );
 
-        console.log(result)
-
         // axios
-        //   .post(process.env.NETLIFY_HOOK_URL)
+        //   .post("https://api.netlify.com/build_hooks/5fb20a0486dab32ef4b8bab0")
         //   .then(function (response) {
         //     console.log(response);
         //   })
@@ -103,8 +86,7 @@ const resolvers = {
         //     console.error(error);
         //   });
 
-        // return result.data;
-        return data.args
+        return result.data;
       } catch (error) {
         return error.toString();
       }
@@ -115,6 +97,7 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  playground: true,
 });
 
 const handler = server.createHandler();
