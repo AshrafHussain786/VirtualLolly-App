@@ -4,9 +4,14 @@ import { graphql } from "gatsby";
 // import Header from "./header";
 
 
+<<<<<<< HEAD
 export default function LollyPage(x) {
     console.log("Value of X=====>" + x)
     console.log("DATA=====>")
+=======
+export default function DynamicLollyPage(data) {
+    console.log("Value of data=====>" + data)
+>>>>>>> ef1e4710a6fe1c08a8c94df40c92f5b00321532a
   return (
     <div>
 
