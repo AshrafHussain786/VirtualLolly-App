@@ -46,10 +46,9 @@ export default function NotFound({ location }) {
           </span>
           <div className="recievedContentContainer">
             <Lolly
-              style="lollyRecieved"
-              lollyTop={data.getLollyBySlug.topColor}
-              lollyMid={data.getLollyBySlug.mediumColor}
-              lollyBot={data.getLollyBySlug.bottomColor}
+              fillLollyTop={data.getLollyBySlug.topColor}
+              fillLollyMiddle={data.getLollyBySlug.mediumColor}
+              fillLollyBottom={data.getLollyBySlug.bottomColor}
             />
 
             <div className="recievedTextContainer">
