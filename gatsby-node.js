@@ -22,7 +22,7 @@ exports.createPages = async ({ actions, graphql }) => {
       path: `lolly/${indLolly.path}`,
       component: path.resolve(`./src/template/lollyPage.jsx`),
       context: {
-        lollyPath: indLolly.path,
+        lolly: indLolly,
       },
     })
   })
