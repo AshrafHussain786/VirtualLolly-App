@@ -78,7 +78,7 @@ const resolvers = {
         );
 
         axios
-          .post("http://localhost:8888/.netlify/functions/createLolly/")
+          .post("https://api.netlify.com/build_hooks/5fb55a152ea1be1e4382f33c")
           .then(function (response) {
             // console.log(response);
           })
