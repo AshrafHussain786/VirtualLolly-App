@@ -17,9 +17,9 @@ const GET_LOLLY = gql`
 `
 
 export default function NotFound({ location }) {
-  var queryLollies = location.pathname.slice(0, 9)
-  var queryPath = location.pathname.slice(9)
-
+  var queryLollies = location.pathname.slice(0, 7)
+  var queryPath = location.pathname.slice(7)
+    console.log("querylolly"+ queryLollies,"querypath" + queryPath)
   const { loading, error, data } = useQuery(GET_LOLLY, {
     variables: { path: queryPath },
   })
@@ -35,10 +35,6 @@ export default function NotFound({ location }) {
         <div className="loading">Loading...</div>
       ) : !!data && queryLollies === "/lolly/" ? (
         <div>
-          <Header
-            mainHeadingText="Any Thing Sweet"
-            secondaryHeadingText="You recieved a lolly, dont eat it alone !"
-          />
           <h5 className="sharableLinkContainer">Your sharable link: </h5>{" "}
           <span className="sharableLink">
             {" "}
