@@ -1,5 +1,5 @@
 import React from "react"
-import Lolly from "../component/lolly"
+import Lolly from "../component/Lolly"
 import { useQuery, gql } from "@apollo/client"
 
 const GET_LOLLY = gql`
