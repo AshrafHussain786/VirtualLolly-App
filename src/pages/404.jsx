@@ -25,7 +25,10 @@ export default function NotFound({ location }) {
   const { loading, error, data } = useQuery(GET_LOLLY, {
     variables: { lollyPath: queryPath },
   })
-
+  if (error) {
+    console.log("There is a Error in the page")
+  }
+  
   return (
     <div>
       {loading ? (
@@ -39,7 +42,7 @@ export default function NotFound({ location }) {
           <h5 className="sharableLinkContainer">Your sharable link: </h5>{" "}
           <span className="sharableLink">
             {" "}
-            {`https://sharelolly.netlify.app/lollies/${data.getLollyBySlug.path}`}
+            {`https://pedantic-williams-05140f.netlify.app/lolly/${data.getLollyBySlug.path}`}
           </span>
           <div className="recievedContentContainer">
             <Lolly
