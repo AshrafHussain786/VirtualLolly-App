@@ -1,15 +1,17 @@
 import React from "react";
-import Lolly from "./lolly";
+// import Lolly from "./lolly";
 import { graphql } from "gatsby";
-import Header from "./header";
+// import Header from "./header";
 
 
-export default function DynamicLollyPage(x) {
+export default function LollyPage(x) {
     console.log("Value of X=====>" + x)
-    console.log("DATA=====>"+ x.data)
+    console.log("DATA=====>")
   return (
     <div>
-      {/* <Header
+
+      <h1>Hello World</h1>
+            {/* <Header
         mainHeadingText="Kuch Meetha Hojaye?"
         secondaryHeadingText="You recieved a lolly, dont eat it alone !"
       />

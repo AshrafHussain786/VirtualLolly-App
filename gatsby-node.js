@@ -1,6 +1,6 @@
 const path = require(`path`)
 exports.createPages = async ({ actions, graphql }) => {
-  
+  console.log(graphql)
   const result = await graphql(`
   query MyQuery{
     LOLLIES{
@@ -12,21 +12,18 @@ exports.createPages = async ({ actions, graphql }) => {
       mediumColor
       bottomColor
       path
-    }
-  }}
+  }}}
   `)
 
-console.log(result)
 
-
-  result.data.LOLLIES.getAllLollies.map((indLolly)=> {
-
-    actions.createPage({
-          path: `lollies/${indLolly.path}`,
-          component: path.resolve(`./src/template/lollyPage.jsx`),
-          context: {
-            path: indLolly,
-          },
+  result.data.LOLLIES.getAllLollies.map(async (indLolly) => {
+    console.log(indLolly)
+    await actions.createPage({
+      path: `lolly/${indLolly.path}`,
+      component: path.resolve(`./src/template/lollyPage.jsx`),
+      context: {
+        lollyPath: indLolly.path,
+      },
+    })
   })
-})
 }

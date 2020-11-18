@@ -20,13 +20,14 @@
     "@material-ui/icons": "^4.9.1",
     "cross-env": "^7.0.2",
     "formik": "^2.2.5",
-    "gatsby": "^2.24.85",
+    "gatsby": "^2.26.1",
     "gatsby-cli": "^2.13.1",
     "gatsby-source-graphql": "^2.7.6",
     "netlify-cli": "^2.68.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "shortid": "^2.2.16",
+    "yarn": "^1.22.10",
     "yup": "^0.29.3"
   }
 }

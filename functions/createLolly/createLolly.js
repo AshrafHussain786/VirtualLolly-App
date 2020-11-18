@@ -77,14 +77,14 @@ const resolvers = {
           })
         );
 
-        // axios
-        //   .post("https://api.netlify.com/build_hooks/5fb20a0486dab32ef4b8bab0")
-        //   .then(function (response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function (error) {
-        //     console.error(error);
-        //   });
+        axios
+          .post("http://localhost:8888/.netlify/functions/createLolly/")
+          .then(function (response) {
+            // console.log(response);
+          })
+          .catch(function (error) {
+            // console.error(error);
+          });
 
         return result.data;
       } catch (error) {
@@ -97,7 +97,6 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: true,
 });
 
 const handler = server.createHandler();

@@ -91,27 +91,9 @@ const CreateLolly = () => {
     },
   });
 
+
   await navigate(`/lolly/${slug}`);
 };
-
-
-//   if (loading) {
-//     return (
-//       <div style= {{display: "flex", justifyContent: "center", textAlign: "center", height: "100vh"}}>
-//         <h1>Loading...</h1>
-//       </div>
-//     );
-//   }
-
-//   if (error) {
-//     return (
-//       <div style= {{display: "flex", justifyContent: "center", textAlign: "center", height: "100vh"}}>
-//         <h1>ERROR</h1>
-//       </div>
-//     );
-//   }
-
-// console.log(data)
 
   return (
     
