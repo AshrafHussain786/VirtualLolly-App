@@ -4,14 +4,9 @@ import Lolly from '../component/Lolly'
 
 export default function LollyPage(lolly) {
 
-  console.log(lolly)
   return (
     <div>
 
-            <Header
-        mainHeadingText="Want more sweet?"
-        secondaryHeadingText="You recieved a lolly, dont eat it alone !"
-      />
       <h5 className="sharableLinkContainer">Your sharable link: </h5>{" "}
       <span className="sharableLink">
         {" "}
