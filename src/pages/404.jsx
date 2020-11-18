@@ -1,7 +1,5 @@
-
 import React from "react"
-import Lolly from "../components/lolly"
-import Header from "../components/header"
+import Lolly from "../component/lolly"
 import { useQuery, gql } from "@apollo/client"
 
 const GET_LOLLY = gql`
@@ -23,11 +21,13 @@ export default function NotFound({ location }) {
   var queryPath = location.pathname.slice(9)
 
   const { loading, error, data } = useQuery(GET_LOLLY, {
-    variables: { lollyPath: queryPath },
+    variables: { path: queryPath },
   })
   if (error) {
     console.log("There is a Error in the page")
   }
+
+  console.log(data)
   
   return (
     <div>
