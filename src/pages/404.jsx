@@ -16,9 +16,10 @@ const GET_LOLLY = gql`
   }
 `
 
-export default function NotFound({ location }) {
-  var queryLollies = location.pathname.slice(0, 7)
-  var queryPath = location.pathname.slice(7)
+export default function NotFound(x) {
+  console.log(x)
+  var queryLollies = x.location.pathname.slice(0, 7)
+  var queryPath = x.location.pathname.slice(7)
     console.log("querylolly"+ queryLollies,"querypath" + queryPath)
   const { loading, error, data } = useQuery(GET_LOLLY, {
     variables: { path: queryPath },
