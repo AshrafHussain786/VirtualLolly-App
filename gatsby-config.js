@@ -10,7 +10,8 @@ module.exports = {
           // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
           fieldName: "LOLLIES",
           // Url to query from
-           url: "https://pedantic-williams-05140f.netlify.app/.netlify/functions/createLolly",
+          //  url: "https://pedantic-williams-05140f.netlify.app/.netlify/functions/createLolly",
+             url: "https://bootcamp-project12ee-ashraf.netlify.app/.netlify/functions/createLolly",
         },
       }
     ]

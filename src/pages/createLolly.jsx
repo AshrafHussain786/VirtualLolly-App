@@ -30,14 +30,20 @@ import ErrorMsg from "../Utils/ErrorMsg";
 const CREATE_LOLLY_MUTATION = gql`
   mutation createLolly(
     $recipientName: String!
-    $message: String!
+    $message: String
     $senderName: String!
     $topColor: String!
     $mediumColor: String!
     $bottomColor: String!
     $path: String!
   ) {
-    createLolly(recipientName: $recipientName, message: $message, senderName: $senderName, topColor: $topColor, mediumColor: $mediumColor, bottomColor: $bottomColor, path: $path)
+    createLolly(recipientName: $recipientName, 
+      message: $message, 
+      senderName: $senderName, 
+      topColor: $topColor, 
+      mediumColor: $mediumColor, 
+      bottomColor: $bottomColor, 
+      path: $path)
      {
       message
       }

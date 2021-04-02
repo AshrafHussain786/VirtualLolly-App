@@ -31,16 +31,16 @@ const typeDefs = gql`
   }
 `;
 
-const Client = new faunadb.Client({
-  secret: "fnAD6uH78FACAXQt4Xqf5rXsT4plCVUYGul68PEm",
-});
+const client = new faunadb.Client({ secret: process.env.FAUNADB_SERVER_SECRET });
+
+// const Client = new faunadb.Client({secret: "fnAD6uH78FACAXQt4Xqf5rXsT4plCVUYGul68PEm"});
 
 const resolvers = {
   Query: {
     getAllLollies: async () => {
-      var result = await Client.query(
+      var result = await client.query(
         q.Map(
-          q.Paginate(q.Match(q.Index("AllLollies"))),
+          q.Paginate(q.Match(q.Index("allLollies"))),
           q.Lambda((x) => q.Get(x))
         )
       );
@@ -56,7 +56,7 @@ const resolvers = {
     getLollyBySlug: async (_, { path }) => {
       console.log(path);
       try {
-        const result = await Client.query(
+        const result = await client.query(
           q.Get(q.Match(q.Index("Lolly"), path))
         );
 
@@ -71,20 +71,20 @@ const resolvers = {
   Mutation: {
     createLolly: async (_, args) => {
       try {
-        const result = await Client.query(
-          q.Create(q.Collection("Lolly"), {
+        const result = await client.query(
+          q.Create(q.Collection("LOLLIES"), {
             data: args,
           })
         );
 
-        axios
-          .post("https://api.netlify.com/build_hooks/5fb55a152ea1be1e4382f33c")
-          .then(function (response) {
-            // console.log(response);
-          })
-          .catch(function (error) {
-            // console.error(error);
-          });
+        // axios
+        //   .post("https://api.netlify.com/build_hooks/5fb55a152ea1be1e4382f33c")
+        //   .then(function (response) {
+        //     // console.log(response);
+        //   })
+        //   .catch(function (error) {
+        //     // console.error(error);
+        //   });
 
         return result.data;
       } catch (error) {
